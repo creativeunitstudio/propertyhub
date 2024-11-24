@@ -60,8 +60,14 @@ function filterProducts() {
 //FETCH DATA HTML// 
     async function performSearch() {
         // Get the search query from the input field
-        let searchQuery = document.getElementById('search').value.toLowerCase();
-        
+        let searchQuery = document.getElementById('search').value.trim().toLowerCase();
+
+        // If the search input is empty, show a message and stop further execution
+        if (searchQuery === '') {
+            document.getElementById('search-results').innerHTML = '<p>Please type in your area...</p>';
+            return;
+        }
+
         // Fetch the external properties data (properties.html)
         try {
             let response = await fetch('properties.html');
@@ -78,6 +84,7 @@ function filterProducts() {
             document.getElementById('search-results').innerHTML = '';
 
             // Loop through each property and check if it matches the search query
+            let foundResults = false; // Flag to track if we found any results
             properties.forEach(property => {
                 let propertyName = property.querySelector('h3') ? property.querySelector('h3').textContent.toLowerCase() : '';
                 let propertyCategory = property.querySelector('h4') ? property.querySelector('h4').textContent.toLowerCase() : '';
@@ -87,6 +94,7 @@ function filterProducts() {
 
                 // If either the name or the category matches the search query, show it
                 if (propertyName.includes(searchQuery) || propertyCategory.includes(searchQuery)) {
+                    foundResults = true; // We found at least one matching result
                     // Create the search result item with image
                     let resultItem = document.createElement('div');
                     resultItem.classList.add('search-result-item');
@@ -107,11 +115,18 @@ function filterProducts() {
                 }
             });
 
-            // If no results found
-            if (document.getElementById('search-results').children.length === 0) {
-                document.getElementById('search-results').innerHTML = '<p>No results found.</p>';
+            // If no results found, show a message
+            if (!foundResults) {
+                document.getElementById('search-results').innerHTML = '<p>No results found for your search.</p>';
             }
         } catch (error) {
             console.error("Error fetching properties:", error);
         }
     }
+
+    // Clear the results immediately when the search input is empty
+    document.getElementById('search').addEventListener('input', function() {
+        if (this.value === '') {
+            document.getElementById('search-results').innerHTML = '';
+        }
+    });}
