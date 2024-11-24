@@ -688,7 +688,7 @@ p {
 
     /* Style each search result item */
     .search-result-item {
-        width: calc(33% - 20px); /* 3 items per row */
+        width: calc(33% - 20px); /* Adjust width of each item (3 per row) */
         border: 1px solid #ccc;
         border-radius: 8px;
         overflow: hidden;
@@ -704,7 +704,7 @@ p {
     /* Style the image in each result */
     .property-image {
         width: 100%;
-        height: 150px; /* Reduced height of the image */
+        height: 200px;
         object-fit: cover;
     }
 
@@ -736,19 +736,19 @@ p {
         text-decoration: none;
         color: inherit;
     }
-
-    /* Media Queries for Responsiveness */
-    @media (max-width: 768px) {
-        .search-result-item {
-            width: calc(50% - 20px); /* 2 items per row on smaller screens */
-        }
+	
+	@media (max-width: 768px) {
+    .search-result-item {
+        width: calc(50% - 20px); /* 2 items per row on smaller screens */
     }
+}
 
-    @media (max-width: 480px) {
-        .search-result-item {
-            width: 100%; /* 1 item per row on mobile */
-        }
+@media (max-width: 480px) {
+    .search-result-item {
+        width: 100%; /* 1 item per row on mobile */
     }
+}
+
 
 /* Footer Styling */
 footer {
